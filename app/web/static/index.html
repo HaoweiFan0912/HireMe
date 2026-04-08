@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Schema Extractor</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Resume Schema Workspace</p>
+          <h1>Upload files and fill the schema</h1>
+          <p class="hero-text">
+            The editor stays fully editable. Upload new files to extract supported content into the draft, then save when you want to sync the JSON preview and backend record.
+          </p>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="control-panel">
+          <section class="panel-card">
+            <h2>Controls</h2>
+            <label class="api-key-field" for="api-key-input">
+              <span class="api-key-label">OpenAI API Key</span>
+              <input id="api-key-input" class="editor-input" type="password" placeholder="Enter your own OpenAI API key" autocomplete="off" />
+            </label>
+            <div class="inline-actions">
+              <button id="save-api-key-button" type="button">Save Key</button>
+              <button id="clear-api-key-button" type="button" class="secondary-button">Use Default Key</button>
+            </div>
+            <p id="api-key-status" class="muted action-hint">
+              Leave this empty to use the environment or server-side default key if one is configured. Your custom key is stored only in this browser and is never written into the saved record.
+            </p>
+
+            <form id="upload-form">
+              <label class="upload-dropzone" for="file-input">
+                <input id="file-input" name="file" type="file" required />
+                <span class="upload-title">Choose or drop a file</span>
+                <span class="upload-subtitle">Supports PDF, DOCX, TXT, Markdown, and images</span>
+              </label>
+              <button id="submit-button" type="submit">Extract Into Draft</button>
+            </form>
+
+            <button id="save-button" type="button">Save Edits</button>
+            <button id="reset-button" type="button" class="secondary-button">Reset Draft</button>
+            <p class="muted action-hint">Everything on the right is an editable draft, including extracted values and manual changes. Save when you want to update the JSON preview and backend record.</p>
+            <p id="status-text">Loading schema...</p>
+            <p id="last-file" class="muted"></p>
+          </section>
+
+          <section class="panel-card">
+            <h2>JSON Preview</h2>
+            <pre id="json-preview" class="json-preview"></pre>
+          </section>
+        </aside>
+
+        <section class="schema-panel">
+          <div id="schema-root" class="schema-root"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
