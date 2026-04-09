@@ -1,0 +1,373 @@
+[
+  {
+    "id": "close_fit_data_science_intern",
+    "fit_tier": "close_fit",
+    "target_role": "Data Science Intern",
+    "job_description": "We are seeking a Data Science Intern to support customer analytics and retention initiatives. The intern will use Python and SQL to build data pipelines, clean CRM and product data, engineer features, train predictive models, and communicate insights through dashboards. Preferred candidates have experience with logistic regression, gradient boosting, experimentation or churn modeling, and can explain results to business stakeholders.",
+    "must_hit_keywords": [
+      "Python",
+      "SQL",
+      "data pipelines",
+      "CRM",
+      "feature engineering",
+      "predictive models",
+      "logistic regression",
+      "gradient boosting",
+      "dashboards",
+      "churn"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Amazon Web Services, Inc."
+      ],
+      "skills": [
+        "Python",
+        "structured query language",
+        "logistic regression",
+        "gradient boosting",
+        "dashboard development"
+      ],
+      "education": [
+        "STAT GR5263 | Applied Data Science"
+      ]
+    },
+    "expected_missing_requirements": [
+      "experimentation"
+    ],
+    "must_not_claim": [
+      "A/B testing",
+      "causal inference",
+      "Tableau",
+      "Looker"
+    ]
+  },
+  {
+    "id": "close_fit_machine_learning_intern",
+    "fit_tier": "close_fit",
+    "target_role": "Machine Learning Intern",
+    "job_description": "The Machine Learning Intern will improve document understanding and information retrieval systems. Responsibilities include building evaluation pipelines, experimenting with embeddings and reranking methods, analyzing retrieval metrics, and collaborating with researchers on prompt-based workflows. Strong candidates know Python, machine learning fundamentals, information retrieval, and can communicate metric improvements clearly.",
+    "must_hit_keywords": [
+      "Python",
+      "machine learning",
+      "information retrieval",
+      "evaluation pipelines",
+      "embeddings",
+      "reranking",
+      "retrieval metrics",
+      "prompt-based workflows"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Microsoft Corporation"
+      ],
+      "skills": [
+        "machine learning",
+        "sentence embeddings",
+        "reranking",
+        "prompt-based labeling"
+      ],
+      "education": [
+        "COMS W4721 | Machine Learning for Data Science"
+      ]
+    },
+    "expected_missing_requirements": [
+      "transformer fine-tuning"
+    ],
+    "must_not_claim": [
+      "BERT fine-tuning",
+      "production search ranking",
+      "Kubernetes"
+    ]
+  },
+  {
+    "id": "close_fit_applied_ai_research_intern",
+    "fit_tier": "close_fit",
+    "target_role": "Applied AI Research Intern",
+    "job_description": "Join our Applied AI team to prototype retrieval-augmented and prompt-based systems. You will analyze experimental results, compare model configurations, and help turn research ideas into clean evaluation workflows. Candidates should have coursework or project exposure to machine learning, deep learning, large language models, and strong Python-based experimentation habits.",
+    "must_hit_keywords": [
+      "retrieval-augmented",
+      "prompt-based",
+      "experimental results",
+      "evaluation workflows",
+      "machine learning",
+      "deep learning",
+      "large language models",
+      "Python"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Microsoft Corporation"
+      ],
+      "skills": [
+        "large language model",
+        "retrieval-augmented generation",
+        "machine learning",
+        "deep learning"
+      ],
+      "education": [
+        "COMS W4995 | Large-Scale Deep Learning",
+        "COMS W4721 | Machine Learning for Data Science"
+      ]
+    },
+    "expected_missing_requirements": [
+      "published research"
+    ],
+    "must_not_claim": [
+      "research paper",
+      "peer-reviewed publication",
+      "LLM fine-tuning"
+    ]
+  },
+  {
+    "id": "close_fit_customer_analytics_intern",
+    "fit_tier": "close_fit",
+    "target_role": "Customer Analytics Intern",
+    "job_description": "This internship supports subscription analytics and retention strategy. The role focuses on cohort analysis, churn prediction, customer dashboarding, and communicating model-driven findings to operations partners. Preferred experience includes Python, SQL, CRM data, feature engineering, and translating analysis into operational actions.",
+    "must_hit_keywords": [
+      "subscription analytics",
+      "retention",
+      "cohort analysis",
+      "churn prediction",
+      "dashboarding",
+      "Python",
+      "SQL",
+      "CRM data",
+      "feature engineering"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Amazon Web Services, Inc."
+      ],
+      "skills": [
+        "churn prediction",
+        "feature engineering",
+        "dashboard development",
+        "data pipeline development"
+      ]
+    },
+    "expected_missing_requirements": [
+      "customer segmentation experiments"
+    ],
+    "must_not_claim": [
+      "customer lifetime value modeling",
+      "Snowflake",
+      "dbt"
+    ]
+  },
+  {
+    "id": "adjacent_fit_data_analyst",
+    "fit_tier": "adjacent_fit",
+    "target_role": "Data Analyst",
+    "job_description": "We are hiring a Data Analyst to clean business data, build repeatable reporting pipelines, create dashboards, and summarize trends for non-technical stakeholders. The role values strong SQL and Python skills, attention to data quality, and the ability to turn analysis into clear recommendations. Experience with BI tools is helpful but not required.",
+    "must_hit_keywords": [
+      "data quality",
+      "reporting pipelines",
+      "dashboards",
+      "SQL",
+      "Python",
+      "trend analysis",
+      "stakeholders"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Amazon Web Services, Inc."
+      ],
+      "skills": [
+        "structured query language",
+        "Python",
+        "data cleaning",
+        "dashboard development"
+      ]
+    },
+    "expected_missing_requirements": [
+      "BI tools"
+    ],
+    "must_not_claim": [
+      "Tableau",
+      "Power BI"
+    ]
+  },
+  {
+    "id": "adjacent_fit_product_analytics",
+    "fit_tier": "adjacent_fit",
+    "target_role": "Product Analytics Intern",
+    "job_description": "The Product Analytics Intern will partner with product managers to understand user behavior, define metrics, build SQL analyses, and recommend improvements. Helpful backgrounds include experimentation, dashboarding, retention metrics, and presenting findings to cross-functional teams.",
+    "must_hit_keywords": [
+      "metrics",
+      "SQL analyses",
+      "user behavior",
+      "dashboarding",
+      "retention metrics",
+      "cross-functional teams"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Amazon Web Services, Inc."
+      ],
+      "skills": [
+        "structured query language",
+        "dashboard development",
+        "churn prediction"
+      ]
+    },
+    "expected_missing_requirements": [
+      "product experimentation",
+      "user event analytics"
+    ],
+    "must_not_claim": [
+      "A/B testing",
+      "Amplitude",
+      "Mixpanel"
+    ]
+  },
+  {
+    "id": "adjacent_fit_research_assistant_nlp",
+    "fit_tier": "adjacent_fit",
+    "target_role": "Research Assistant, NLP",
+    "job_description": "Support research experiments in natural language processing and retrieval. Responsibilities include curating evaluation datasets, comparing model outputs, analyzing error cases, and documenting findings for the research team. Students with machine learning coursework, deep learning exposure, Python, and strong written communication are encouraged to apply.",
+    "must_hit_keywords": [
+      "natural language processing",
+      "retrieval",
+      "evaluation datasets",
+      "model outputs",
+      "error analysis",
+      "machine learning",
+      "deep learning",
+      "Python"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Microsoft Corporation"
+      ],
+      "skills": [
+        "machine learning",
+        "retrieval-augmented generation",
+        "sentence embeddings",
+        "deep learning"
+      ],
+      "education": [
+        "COMS W4995 | Large-Scale Deep Learning"
+      ]
+    },
+    "expected_missing_requirements": [
+      "evaluation dataset curation"
+    ],
+    "must_not_claim": [
+      "published paper",
+      "NLP benchmark ownership"
+    ]
+  },
+  {
+    "id": "adjacent_fit_business_intelligence",
+    "fit_tier": "adjacent_fit",
+    "target_role": "Business Intelligence Intern",
+    "job_description": "As a Business Intelligence Intern, you will support weekly KPI reporting, automate recurring data workflows, and build dashboards that help operations teams track performance. Candidates should be comfortable with SQL, Python, analytics communication, and cross-team collaboration. Familiarity with cloud data environments is a plus.",
+    "must_hit_keywords": [
+      "KPI reporting",
+      "automate workflows",
+      "dashboards",
+      "operations teams",
+      "SQL",
+      "Python",
+      "analytics communication",
+      "cloud data"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Amazon Web Services, Inc."
+      ],
+      "skills": [
+        "structured query language",
+        "Python",
+        "dashboard development",
+        "Amazon Web Services"
+      ]
+    },
+    "expected_missing_requirements": [
+      "cloud warehouse tooling"
+    ],
+    "must_not_claim": [
+      "Redshift",
+      "BigQuery",
+      "Looker"
+    ]
+  },
+  {
+    "id": "stretch_fit_machine_learning_engineer",
+    "fit_tier": "stretch_fit",
+    "target_role": "Machine Learning Engineer Intern",
+    "job_description": "The MLE Intern will productionize machine learning systems, build model serving pipelines, work with containerized deployment workflows, and monitor model performance in production. Experience with Python, PyTorch or TensorFlow, ML system design, CI/CD, Docker, Kubernetes, and cloud deployment is strongly preferred.",
+    "must_hit_keywords": [
+      "Python",
+      "PyTorch",
+      "model serving",
+      "deployment",
+      "production",
+      "Docker",
+      "Kubernetes",
+      "cloud deployment"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Microsoft Corporation"
+      ],
+      "skills": [
+        "Python",
+        "PyTorch",
+        "Docker"
+      ]
+    },
+    "expected_missing_requirements": [
+      "model serving",
+      "production deployment",
+      "Kubernetes",
+      "CI/CD"
+    ],
+    "must_not_claim": [
+      "Kubernetes",
+      "TensorFlow",
+      "production deployment",
+      "model serving"
+    ]
+  },
+  {
+    "id": "stretch_fit_data_platform_engineering",
+    "fit_tier": "stretch_fit",
+    "target_role": "Data Platform Engineering Intern",
+    "job_description": "This internship supports our data platform team in building reliable ETL pipelines, maintaining data models, and improving warehouse performance. Candidates should know Python and SQL, and familiarity with Spark, Airflow, dbt, Kafka, and distributed data systems is preferred. Strong engineering habits and testing discipline are important.",
+    "must_hit_keywords": [
+      "ETL pipelines",
+      "data models",
+      "warehouse performance",
+      "Python",
+      "SQL",
+      "Spark",
+      "Airflow",
+      "dbt",
+      "Kafka"
+    ],
+    "expected_section_priority": {
+      "professional_experience": [
+        "Amazon Web Services, Inc."
+      ],
+      "skills": [
+        "Python",
+        "structured query language",
+        "data pipeline development"
+      ]
+    },
+    "expected_missing_requirements": [
+      "Spark",
+      "Airflow",
+      "dbt",
+      "Kafka",
+      "distributed data systems"
+    ],
+    "must_not_claim": [
+      "Spark",
+      "Airflow",
+      "dbt",
+      "Kafka"
+    ]
+  }
+]

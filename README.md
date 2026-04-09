@@ -9,6 +9,8 @@ HireMe is a visual workspace for extracting structured resume data from uploaded
 - Extracts supported fields into a fixed resume schema with OpenAI.
 - Merges repeated education, experience, activity, and skill objects across multiple uploads.
 - Allows full manual editing before saving to the backend record.
+- Generates a general-purpose resume draft from the saved structured profile.
+- Generates a tailored resume draft from the saved structured profile plus a job description.
 - Supports a browser-provided OpenAI API key while still allowing environment-based configuration.
 
 ## Start
@@ -23,6 +25,73 @@ python3 -m uvicorn app.main:app --reload
 Then open `http://127.0.0.1:8000`.
 
 On macOS, you can also double-click `start.command`. It installs missing dependencies, finds an open port, starts the server, and opens the browser automatically.
+
+## Resume Generation API
+
+After you have a saved structured record, you can generate resume drafts through the backend API.
+
+Generate a general resume:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/generate/general-resume \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target_role": "Data Science Intern"
+  }'
+```
+
+Generate a job-tailored resume:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/generate/tailored-resume \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target_role": "Machine Learning Intern",
+    "job_description": "Paste the target job description here."
+  }'
+```
+
+Both endpoints also accept:
+
+- `record`: explicit structured resume JSON. If omitted, the backend uses the saved record under `runtime/data/`.
+- `openai_api_key`: optional per-request API key override.
+- `base_resume`: optional general resume payload to reuse when calling `/api/generate/tailored-resume`.
+
+Both responses return structured resume content plus a `rendered_text` field for quick inspection.
+
+## Tailored Prompt Eval
+
+The repo includes a fixed first-round prompt-tuning eval set under `evals/tailored_resume/`:
+
+- `profile_maya_chen_v0.json`: frozen candidate profile
+- `cases_v0.json`: 10 job-description cases split into close-fit, adjacent-fit, and stretch-fit tiers
+
+Run the offline eval runner from the repo root:
+
+```bash
+python3 scripts/evaluate_tailored_resume.py
+```
+
+Useful options:
+
+```bash
+python3 scripts/evaluate_tailored_resume.py --skip-judge
+python3 scripts/evaluate_tailored_resume.py --case-id close_fit_machine_learning_intern
+python3 scripts/evaluate_tailored_resume.py --output runtime/evals/tailored_resume_eval.json
+```
+
+The current tailored pipeline uses an internal multi-step flow:
+
+1. JD analysis
+2. candidate evidence alignment
+3. tailored drafting
+4. safety review and optional revision
+
+The eval runner compares:
+
+- `general resume`
+- `v0 baseline tailored resume` (single-shot prompt)
+- `current tailored resume` (multi-step pipeline)
 
 ## API Key Flow
 
@@ -55,6 +124,10 @@ HireMe/
 │   │   ├── schema.py
 │   │   ├── schema_tools.py
 │   │   └── skills_engine.py
+│   ├── generation/
+│   │   ├── models.py
+│   │   ├── prompt_collection.py
+│   │   └── service.py
 │   ├── storage/
 │   │   └── records.py
 │   ├── web/
@@ -64,9 +137,11 @@ HireMe/
 │   │       └── styles.css
 │   └── main.py
 ├── example/
+├── evals/
 ├── runtime/
 │   └── data/
 ├── scripts/
+│   ├── evaluate_tailored_resume.py
 │   └── generate_sim_example_files.py
 ├── API_KEYS.py
 ├── README.md
@@ -117,6 +192,12 @@ HireMe/
 - `app/extraction/render_pdf_pages.swift`: scanned-PDF page rendering helper.
 - `app/extraction/extractor.py`: thin orchestration layer that wires document reading, extraction, refinement, and merge-facing exports together.
 
+### `app/generation/`
+
+- `app/generation/models.py`: structured response models for general and job-tailored resume drafts.
+- `app/generation/prompt_collection.py`: prompt builders for general resume generation and JD-based tailoring.
+- `app/generation/service.py`: OpenAI orchestration and plain-text rendering helpers for generated resumes.
+
 ### `app/web/static/`
 
 - `app/web/static/index.html`: page layout.
@@ -125,7 +206,13 @@ HireMe/
 
 ### `scripts/`
 
+- `scripts/evaluate_tailored_resume.py`: offline evaluator for general, baseline tailored, and current tailored prompt performance.
 - `scripts/generate_sim_example_files.py`: generates the simulated `.docx` documents in `example/`.
+
+### `evals/tailored_resume/`
+
+- `evals/tailored_resume/profile_maya_chen_v0.json`: frozen profile used for prompt tuning.
+- `evals/tailored_resume/cases_v0.json`: annotated JD cases and expected signals for the first eval round.
 
 ### `example/`
 
