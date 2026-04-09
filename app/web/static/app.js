@@ -11,6 +11,13 @@ const apiKeyInput = document.getElementById("api-key-input");
 const saveApiKeyButton = document.getElementById("save-api-key-button");
 const clearApiKeyButton = document.getElementById("clear-api-key-button");
 const apiKeyStatus = document.getElementById("api-key-status");
+const targetRoleInput = document.getElementById("target-role-input");
+const jobDescriptionInput = document.getElementById("job-description-input");
+const generateGeneralButton = document.getElementById("generate-general-button");
+const generateTailoredButton = document.getElementById("generate-tailored-button");
+const generationStatus = document.getElementById("generation-status");
+const generationMeta = document.getElementById("generation-meta");
+const generatedResumeOutput = document.getElementById("generated-resume-output");
 
 const API_KEY_STORAGE_KEY = "hireme_openai_api_key";
 
@@ -19,6 +26,8 @@ let blankData = null;
 let currentData = null;
 let draftData = null;
 let isDirty = false;
+let lastGeneralResume = null;
+let generatedResumeIsStale = false;
 
 function getApiKeyValue() {
   return apiKeyInput.value.trim();
@@ -100,9 +109,36 @@ function updateSaveButtonState() {
   saveButton.disabled = !isDirty;
 }
 
+function setGenerationStatus(message) {
+  generationStatus.textContent = message;
+}
+
+function setGenerationButtonsDisabled(isDisabled) {
+  generateGeneralButton.disabled = isDisabled;
+  generateTailoredButton.disabled = isDisabled;
+}
+
+function clearGenerationPreview(message = "No generated resume yet.") {
+  lastGeneralResume = null;
+  generatedResumeIsStale = false;
+  generationMeta.innerHTML = "";
+  generationMeta.hidden = true;
+  generatedResumeOutput.textContent = "Run a generation request to preview the resume text here.";
+  setGenerationStatus(message);
+}
+
+function markGenerationStale() {
+  if (generatedResumeOutput.textContent === "Run a generation request to preview the resume text here.") {
+    return;
+  }
+  generatedResumeIsStale = true;
+  setGenerationStatus("The draft changed after the last generation. Regenerate to refresh the resume output.");
+}
+
 function markDirty() {
   isDirty = true;
   updateSaveButtonState();
+  markGenerationStale();
 }
 
 function createSmallButton(label, className = "") {
@@ -111,6 +147,147 @@ function createSmallButton(label, className = "") {
   button.className = `small-button ${className}`.trim();
   button.textContent = label;
   return button;
+}
+
+function createValueChip(text, isMuted = false) {
+  const chip = document.createElement("span");
+  chip.className = `value-chip${isMuted ? " empty" : ""}`;
+  chip.textContent = text;
+  return chip;
+}
+
+function appendMetaGroup(title, body) {
+  const group = document.createElement("section");
+  group.className = "generation-meta-group";
+
+  const heading = document.createElement("p");
+  heading.className = "generation-meta-title";
+  heading.textContent = title;
+  group.append(heading);
+
+  if (typeof body === "string") {
+    const paragraph = document.createElement("p");
+    paragraph.className = "generation-meta-text";
+    paragraph.textContent = body;
+    group.append(paragraph);
+  } else {
+    group.append(body);
+  }
+
+  generationMeta.append(group);
+}
+
+function renderGenerationMeta(payload) {
+  generationMeta.innerHTML = "";
+
+  if (payload.strategy) {
+    appendMetaGroup("Generation Strategy", payload.strategy);
+  }
+
+  if (Array.isArray(payload.keywords_emphasized) && payload.keywords_emphasized.length > 0) {
+    const wrap = document.createElement("div");
+    wrap.className = "generation-meta-list";
+    payload.keywords_emphasized.forEach((keyword) => {
+      wrap.append(createValueChip(keyword));
+    });
+    appendMetaGroup("Keywords Emphasized", wrap);
+  }
+
+  if (Array.isArray(payload.missing_requirements)) {
+    const wrap = document.createElement("div");
+    wrap.className = "generation-meta-list";
+
+    if (payload.missing_requirements.length === 0) {
+      wrap.append(createValueChip("No explicit missing requirements flagged.", true));
+    } else {
+      payload.missing_requirements.forEach((requirement) => {
+        wrap.append(createValueChip(requirement, true));
+      });
+    }
+
+    appendMetaGroup("Potential Gaps", wrap);
+  }
+
+  generationMeta.hidden = generationMeta.childElementCount === 0;
+}
+
+function renderGeneratedResume(payload, modeLabel) {
+  renderGenerationMeta(payload);
+  generatedResumeOutput.textContent = payload.rendered_text || "The model returned no rendered resume text.";
+  generatedResumeIsStale = false;
+  setGenerationStatus(`${modeLabel} ready. Review the generated text below and regenerate after any draft changes.`);
+}
+
+async function parseJsonResponse(response) {
+  const text = await response.text();
+  if (!text) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (_error) {
+    throw new Error(text);
+  }
+}
+
+function buildGenerationPayload(includeJobDescription) {
+  const payload = {
+    record: draftData,
+  };
+
+  const targetRole = targetRoleInput.value.trim();
+  if (targetRole) {
+    payload.target_role = targetRole;
+  }
+
+  const apiKey = getApiKeyValue();
+  if (apiKey) {
+    payload.openai_api_key = apiKey;
+  }
+
+  if (includeJobDescription) {
+    const jobDescription = jobDescriptionInput.value.trim();
+    if (!jobDescription) {
+      throw new Error("Paste a job description before generating a tailored resume.");
+    }
+    payload.job_description = jobDescription;
+    if (lastGeneralResume && !generatedResumeIsStale) {
+      payload.base_resume = lastGeneralResume;
+    }
+  }
+
+  return payload;
+}
+
+async function requestResumeGeneration(endpoint, payload, modeLabel) {
+  setGenerationButtonsDisabled(true);
+  setGenerationStatus(`Generating ${modeLabel.toLowerCase()}...`);
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await parseJsonResponse(response);
+    if (!response.ok) {
+      throw new Error(result.detail || `Failed to generate ${modeLabel.toLowerCase()}.`);
+    }
+
+    if (endpoint.endsWith("/general-resume")) {
+      lastGeneralResume = result;
+    }
+
+    renderGeneratedResume(result, modeLabel);
+  } catch (error) {
+    setGenerationStatus(error.message);
+  } finally {
+    setGenerationButtonsDisabled(false);
+  }
 }
 
 function addListItem(path, itemTemplate) {
@@ -440,6 +617,7 @@ async function loadSchema() {
   renderSchema();
   updateJsonPreview();
   statusText.textContent = payload.has_saved_record ? "Saved record loaded." : "Blank schema loaded.";
+  clearGenerationPreview("No generated resume yet.");
 }
 
 async function saveDraft() {
@@ -504,6 +682,7 @@ uploadForm.addEventListener("submit", async (event) => {
     draftData = cloneData(payload.data);
     isDirty = true;
     renderSchema();
+    markGenerationStale();
     statusText.textContent = "Extraction finished. The result is now in the editable draft. Save when you want to sync the JSON preview and backend record.";
     lastFileText.textContent = `Last processed file: ${payload.filename || file.name}`;
   } catch (error) {
@@ -529,8 +708,38 @@ resetButton.addEventListener("click", () => {
   draftData = cloneData(blankData);
   isDirty = true;
   renderSchema();
+  clearGenerationPreview("The draft was reset. Generate again when you are ready.");
   statusText.textContent = "The draft has been reset to the blank schema. Save when you want to sync the JSON preview and backend.";
   fileInput.value = "";
+});
+
+targetRoleInput.addEventListener("input", () => {
+  markGenerationStale();
+});
+
+jobDescriptionInput.addEventListener("input", () => {
+  markGenerationStale();
+});
+
+generateGeneralButton.addEventListener("click", async () => {
+  await requestResumeGeneration(
+    "/api/generate/general-resume",
+    buildGenerationPayload(false),
+    "General resume",
+  );
+});
+
+generateTailoredButton.addEventListener("click", async () => {
+  try {
+    const payload = buildGenerationPayload(true);
+    await requestResumeGeneration(
+      "/api/generate/tailored-resume",
+      payload,
+      "Tailored resume",
+    );
+  } catch (error) {
+    setGenerationStatus(error.message);
+  }
 });
 
 loadApiKey();

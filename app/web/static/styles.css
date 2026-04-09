@@ -225,6 +225,68 @@ button:disabled {
   line-height: 1.6;
 }
 
+.generation-field {
+  margin-top: 16px;
+}
+
+.generation-actions {
+  margin-top: 18px;
+}
+
+.generation-textarea {
+  min-height: 180px;
+}
+
+.generation-meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.generation-meta-group {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(31, 29, 26, 0.08);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.generation-meta-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--success);
+}
+
+.generation-meta-text {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.generation-meta-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.generated-resume-output {
+  min-height: 260px;
+  max-height: 640px;
+  overflow: auto;
+  margin: 16px 0 0;
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: #201d1b;
+  color: #f8f3eb;
+  font-size: 12px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
 .schema-root {
   display: grid;
   gap: 18px;
