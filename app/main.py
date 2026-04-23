@@ -1,4 +1,5 @@
 import json
+import os
 
 from fastapi import Body, FastAPI, File, Form, HTTPException, Response, UploadFile
 from fastapi.responses import FileResponse
@@ -12,8 +13,14 @@ from app.extraction.extractor import (
     merge_resume_data,
     normalize_data_to_blueprint,
 )
+from app.generation.service import (
+    generate_general_resume_from_record,
+    render_resume_document,
+    tailor_resume_to_job_description,
+)
 from app.storage.records import load_saved_record, save_record
 
+from app.utils import get_resume_html_string
 
 def create_app() -> FastAPI:
     application = FastAPI(title="Resume Schema Extractor")
@@ -22,6 +29,12 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+
+
+def _resolve_generation_record(record: dict | None) -> dict:
+    if isinstance(record, dict) and record:
+        return record
+    return load_saved_record()[0]
 
 
 @app.get("/")
@@ -88,3 +101,96 @@ async def extract_resume(
         "data": normalized,
         "newly_extracted": extracted,
     }
+
+
+@app.post("/api/generate/general-resume")
+async def generate_general_resume(payload: dict = Body(...)) -> dict:
+    # Import the HTML generation utility. Using 'app.' prefix for correct module resolution.
+    from app.utils import get_resume_html_string 
+    import json
+    import os
+
+    record = _resolve_generation_record(payload.get("record"))
+    target_role = payload.get("target_role")
+    openai_api_key = payload.get("openai_api_key")
+
+    try:
+        generated = generate_general_resume_from_record(
+            record,
+            target_role=target_role,
+            api_key_override=openai_api_key,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # pragma: no cover - network/runtime failure
+        raise HTTPException(status_code=500, detail=f"Resume generation failed: {exc}") from exc
+
+    # Post-processing: Intercept data and inject rendered HTML
+  
+    # Construct base response object from the generated model and text content
+    final_response = {
+        **generated.model_dump(mode="json"),
+        "rendered_text": render_resume_document(generated.resume),
+    }
+
+    # Generate HTML payload using the utility and update the response dictionary
+    html_content = get_resume_html_string(final_response)
+    final_response["rendered_html"] = html_content
+
+    
+    # Persist response locally for debugging and parity with tailored flow
+    save_path = "runtime/latest_general_resume.json"
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    with open(save_path, "w", encoding="utf-8") as f:
+        json.dump(final_response, f, ensure_ascii=False, indent=2)
+
+    return final_response
+
+@app.post("/api/generate/tailored-resume")
+async def generate_tailored_resume(payload: dict = Body(...)) -> dict:
+
+    record = _resolve_generation_record(payload.get("record"))
+    job_description = payload.get("job_description")
+    target_role = payload.get("target_role")
+    openai_api_key = payload.get("openai_api_key")
+    base_resume = payload.get("base_resume")
+
+    try:
+        tailored = tailor_resume_to_job_description(
+            record,
+            job_description=job_description,
+            target_role=target_role,
+            api_key_override=openai_api_key,
+            base_resume=base_resume,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # pragma: no cover
+        raise HTTPException(status_code=500, detail=f"Resume tailoring failed: {exc}") from exc
+
+   
+    # Post-processing: Construct response and inject rendered HTML
+    
+    # Construct the initial response payload from the model and text content
+    final_response = {
+        **tailored.model_dump(mode="json"),
+        "rendered_text": render_resume_document(tailored.resume),
+    }
+
+    # Generate professionally formatted HTML using the utility function.
+    # The entire final_response is passed to provide all necessary resume fields.
+    html_content = get_resume_html_string(final_response)
+    
+    # Append the rendered HTML string to the response payload for the frontend
+    final_response["rendered_html"] = html_content
+
+    # Persist generation results locally for debugging purposes
+    save_path = "runtime/latest_tailored_resume.json"
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    
+    with open(save_path, "w", encoding="utf-8") as f:
+        json.dump(final_response, f, ensure_ascii=False, indent=2)
+        
+    print(f"Tailored resume with HTML rendering saved to: {save_path}")
+
+    return final_response

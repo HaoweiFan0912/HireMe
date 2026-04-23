@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resume Schema Extractor</title>
+    <title>HireMe Resume Workspace</title>
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <div class="page-shell">
       <header class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Resume Schema Workspace</p>
-          <h1>Upload files and fill the schema</h1>
+          <p class="eyebrow">HireMe Resume Workspace</p>
+          <h1>Extract, edit, and tailor resumes</h1>
           <p class="hero-text">
-            The editor stays fully editable. Upload new files to extract supported content into the draft, then save when you want to sync the JSON preview and backend record.
+            Upload supporting materials into a structured profile, edit the draft freely, then generate a general resume or a job-specific version from the current draft and pasted job description.
           </p>
         </div>
       </header>
@@ -48,6 +48,41 @@
             <p class="muted action-hint">Everything on the right is an editable draft, including extracted values and manual changes. Save when you want to update the JSON preview and backend record.</p>
             <p id="status-text">Loading schema...</p>
             <p id="last-file" class="muted"></p>
+          </section>
+
+          <section class="panel-card">
+            <h2>Resume Generation</h2>
+            <label class="api-key-field" for="target-role-input">
+              <span class="api-key-label">Target Role</span>
+              <input
+                id="target-role-input"
+                class="editor-input"
+                type="text"
+                placeholder="Example: Machine Learning Intern"
+              />
+            </label>
+
+            <label class="api-key-field generation-field" for="job-description-input">
+              <span class="api-key-label">Job Description</span>
+              <textarea
+                id="job-description-input"
+                class="editor-textarea generation-textarea"
+                placeholder="Paste the target job description here to create a tailored resume."
+              ></textarea>
+            </label>
+
+            <div class="inline-actions generation-actions">
+              <button id="generate-general-button" type="button">Generate General</button>
+              <button id="generate-tailored-button" type="button" class="secondary-button">Tailor To JD</button>
+            </div>
+
+            <p class="muted action-hint">
+              Generation uses the current in-browser draft, so you can test prompt changes without saving first.
+            </p>
+            <p id="generation-status" class="muted">No generated resume yet.</p>
+
+            <div id="generation-meta" class="generation-meta" hidden></div>
+            <pre id="generated-resume-output" class="generated-resume-output">Run a generation request to preview the resume text here.</pre>
           </section>
 
           <section class="panel-card">
