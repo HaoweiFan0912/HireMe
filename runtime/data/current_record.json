@@ -1,174 +1,63 @@
 {
   "basics": {
-    "full_name": "Maya Chen",
-    "email": "maya.chen.sim@example.com",
-    "links": [
-      {
-        "label": "LinkedIn",
-        "url": "www.linkedin.com/in/maya-chen-sim"
-      },
-      {
-        "label": "GitHub",
-        "url": "https://github.com/mayachen-sim"
-      }
-    ],
+    "full_name": "",
+    "email": "",
+    "links": [],
     "permanent_address": {
-      "city": "Irvine",
-      "state_or_province": "California",
-      "country": "United States",
-      "postal_code": "92617",
-      "phone": "+1 (949) 555-0134"
+      "city": "",
+      "state_or_province": "",
+      "country": "",
+      "postal_code": "",
+      "phone": ""
     },
     "current_address": {
-      "city": "New York",
-      "state_or_province": "New York",
-      "country": "United States",
-      "postal_code": "10027",
-      "phone": "+1 (917) 555-0198"
+      "city": "",
+      "state_or_province": "",
+      "country": "",
+      "postal_code": "",
+      "phone": ""
     }
   },
   "education": [
     {
-      "institution": "Columbia University",
-      "city": "New York",
-      "state_or_province": "New York",
-      "country": "United States",
-      "start_date": "September 2025",
-      "end_date": "February 2027",
-      "degree": "Master of Arts in Statistics",
-      "majors_or_programs": [
-        "Statistics"
-      ],
-      "courses": [
-        "STAT GU4203 | Applied Linear Regression Analysis",
-        "STAT GU4204 | Statistical Inference",
-        "COMS W4721 | Machine Learning for Data Science",
-        "IEOR E4404 | Simulation",
-        "STAT GU4207 | Probability Theory",
-        "STAT GR5263 | Applied Data Science",
-        "IEOR E6711 | Optimization Models and Methods",
-        "COMS W4995 | Large-Scale Deep Learning"
-      ],
-      "gpa": "3.78/4.00",
-      "honors": [
-        "Merit Fellowship (2025)"
-      ]
-    },
-    {
-      "institution": "Northeastern University",
-      "city": "Boston",
-      "state_or_province": "MA",
-      "country": "United States",
-      "start_date": "September 2021",
-      "end_date": "May 2024",
-      "degree": "Bachelor of Science with High Distinction",
-      "majors_or_programs": [
-        "Data Science Major",
-        "Mathematics Minor"
-      ],
+      "institution": "",
+      "city": "",
+      "state_or_province": "",
+      "country": "",
+      "start_date": "",
+      "end_date": "",
+      "degree": "",
+      "majors_or_programs": [],
       "courses": [],
-      "gpa": "3.92/4.00",
-      "honors": [
-        "Dean's List (Fall 2022)"
-      ]
-    },
-    {
-      "institution": "University of California, Irvine",
-      "city": "Irvine",
-      "state_or_province": "CA",
-      "country": "United States",
-      "start_date": "September 2019",
-      "end_date": "May 2021",
-      "degree": "Bachelor of Science coursework prior to transfer",
-      "majors_or_programs": [
-        "Mathematics"
-      ],
-      "courses": [],
-      "gpa": "3.89/4.00",
-      "honors": [
-        "Transfer Academic Excellence Scholarship (2021)"
-      ]
+      "gpa": "",
+      "honors": []
     }
   ],
   "professional_experience": [
     {
-      "company": "Amazon Web Services, Inc.",
-      "city": "Seattle",
-      "state_or_province": "Washington",
-      "country": "United States",
-      "job_title": "Data Science Intern",
-      "start_date": "June 5, 2023",
-      "end_date": "August 25, 2024",
-      "is_current": false,
-      "content": "Developed a customer retention dashboard and a churn scoring workflow for a cloud services subscription portfolio. Built SQL and Python pipelines to clean CRM exports, engineer cohort features, and train logistic regression and gradient boosting models for renewal prediction.",
-      "method": "Utilized SQL and Python to construct data pipelines for cleaning CRM exports, engineering cohort features, and training logistic regression and gradient boosting models to predict renewals. Built SQL and Python pipelines to clean CRM exports, engineer cohort features, and train logistic regression and gradient boosting models for renewal prediction.",
-      "result": "Reduced weekly manual reporting time by 8 hours and improved pilot churn intervention precision from 0.41 to 0.63."
-    },
-    {
-      "company": "Microsoft Corporation",
-      "city": "Redmond",
-      "state_or_province": "WA",
-      "country": "United States",
-      "job_title": "Machine Learning Intern",
-      "start_date": "June 2024",
-      "end_date": "August 2024",
-      "is_current": false,
-      "content": "Developed a document classification and retrieval workflow for internal research archives.",
-      "method": "Built evaluation pipelines with sentence embeddings, reranking, and prompt-based labeling to compare retrieval quality across multiple configurations.",
-      "result": "Improved top-5 retrieval accuracy from 68 percent to 84 percent and shortened analyst review cycles by 30 percent."
+      "company": "",
+      "city": "",
+      "state_or_province": "",
+      "country": "",
+      "job_title": "",
+      "start_date": "",
+      "end_date": "",
+      "is_current": null,
+      "content": "",
+      "method": "",
+      "result": ""
     }
   ],
   "skills": {
-    "languages": [
-      "English (Fluent)",
-      "Mandarin (Native)"
-    ],
-    "computer": [
-      "linear regression",
-      "statistical inference",
-      "machine learning",
-      "simulation",
-      "probability theory",
-      "data science",
-      "optimization",
-      "deep learning",
-      "structured query language",
-      "Python",
-      "logistic regression",
-      "gradient boosting",
-      "data pipeline development",
-      "feature engineering",
-      "customer relationship management data cleaning",
-      "dashboard development",
-      "churn prediction",
-      "R",
-      "Git",
-      "Docker",
-      "pandas",
-      "NumPy",
-      "scikit-learn",
-      "PyTorch",
-      "large language model",
-      "retrieval-augmented generation",
-      "sentence embeddings",
-      "reranking",
-      "prompt-based labeling",
-      "data cleaning"
-    ]
+    "languages": [],
+    "computer": []
   },
   "activities": [
     {
-      "role": "Graduate Student Mentor",
-      "organization": "Columbia University",
-      "start_date": "September 2025",
-      "end_date": "Present",
-      "description": []
-    },
-    {
-      "role": "Volunteer Data Tutor",
-      "organization": "New York Public Library",
-      "start_date": "January 2023",
-      "end_date": "Present",
+      "role": "",
+      "organization": "",
+      "start_date": "",
+      "end_date": "",
       "description": []
     }
   ]

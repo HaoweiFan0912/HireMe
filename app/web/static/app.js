@@ -283,6 +283,23 @@ async function requestResumeGeneration(endpoint, payload, modeLabel) {
     }
 
     renderGeneratedResume(result, modeLabel);
+
+// Functionality: Automatically launch a print-ready HTML preview in a new browser window 
+if (result.rendered_html) {
+  const resumeWindow = window.open('', '_blank');
+  if (resumeWindow) {
+    resumeWindow.document.open();
+    resumeWindow.document.write(result.rendered_html);
+    resumeWindow.document.close();
+    
+    // Assign a dynamic window title based on the active generation mode (General or Tailored)
+    resumeWindow.document.title = `${modeLabel} Preview`;
+  } else {
+    // Provide a fallback notification if the browser's pop-up blocker is active
+    alert("Resume generated successfully. Please allow pop-ups for this site to view the preview.");
+  }
+}
+
   } catch (error) {
     setGenerationStatus(error.message);
   } finally {

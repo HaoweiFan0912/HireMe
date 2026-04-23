@@ -12,6 +12,8 @@ HireMe is a visual workspace for extracting structured resume data from uploaded
 - Generates a general-purpose resume draft from the saved structured profile.
 - Generates a tailored resume draft from the saved structured profile plus a job description.
 - Supports a browser-provided OpenAI API key while still allowing environment-based configuration.
+- Renders print-ready HTML versions of generated resumes with robust null-value filtering.
+- Provides instant browser pop-up previews for both general and tailored generated resumes.
 
 ## Start
 
@@ -135,7 +137,8 @@ HireMe/
 │   │       ├── app.js
 │   │       ├── index.html
 │   │       └── styles.css
-│   └── main.py
+│   ├── main.py
+│   └── utils.py
 ├── example/
 ├── evals/
 ├── runtime/
@@ -161,6 +164,10 @@ HireMe/
 ### `app/main.py`
 
 - `app/main.py`: FastAPI application factory and HTTP routes.
+
+### `app/utils.py`
+
+- `app/utils.py`: HTML rendering utility for generating print-ready resumes with dynamic section filtering.
 
 ### `app/core/`
 
